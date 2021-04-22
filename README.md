@@ -23,8 +23,25 @@
 * ATR: This is a volatility indicator that measures movement potential by comparing the range of each passing day.
     * Useful for determining reasonable stop losses.
     
+
+# Deep Learning Model
+* After adding the above features to the dataset, we built a neural network to try and predict buy and sell signals based on the stoploss and take profit percentages we defined. For stoploss, we will not accept greater than a 5% loss. For the take profit, we will not accept lower than 12% gain.
+* We wanted to build a model that would accurately predict these signals using the features we added to the dataset.
+* In order to achieve this, we built a function that allowed us to create 7 separate models based on a different number of principal components. This allowed us to evaluate multiple models at once to determine which architecture was most fitting.
+
+## Model Architecture
+* For the model architecture, we started with a Sequential model comprised of dense layers that used the "relu" activation function. We chose this architecture because the relu function allows for more adaptability in the model and more closely follows the function of the human neural network. Given the amount of features in our dataset, we believed that this would be the best method of approach for the model.
+* We used four hidden layers in our model with the first two layers having a shape of 32 and the last two layers having a shape of 16. We based this approach on research we did on the performance of similar trading bots that others have built. This was the most effective model in those cases.
+* Lastly, for our output layer we used Sigmoid for activation, Adam for the optimizer, and binary cross-entropy for loss. We chose binary cross entropy because the signal we are predicting gives a result of either 1 or 0.
+![Model Summary](Images/model_summary.png)
+
 # Conclusive Findings
 * Our original intent was to deploy a fully-loaded trading bot that would be able to take consistent 12% profits. However, with a resulting loss of 0.16%, it's clear that there is room for improvement in the model. Perhaps more testing on a larger dataset is necessary to increase the ROI of the model.
+* After Backtesting our model, our estimated ROI was -0.16%. While this does beat the random walk on bullish trades, there is definitely room for improvement in the model.
+![ROI](Images/ROI.png)
+* Additionally, when loading our models, the accuracy score of the models decreased as we added more principal components to the test set.
+![Accuracy](Images/model_accuracy.png)
+![Accuracy Matrix](Images/all_accuracies.png)
 
 ### **Future improvements and limitations**
 With the conclusion of this project, we've realized a myriad of ways in which we can imporve our crypto trading bot.
